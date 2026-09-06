@@ -6,27 +6,27 @@
 //
 
 import SwiftUI
-import SwiftData
+import ChatKit
 
 @main
 struct ChatApp_SwiftUIApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }()
+    @State private var showSplash = true
+    @State private var chatScreenVM = ChatScreenViewModel()
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            Group {
+                if showSplash {
+                    SplashView { showSplash = false }
+                        .transition(.opacity)
+                } else {
+                    AppChatScreen(viewModel: chatScreenVM)
+                        .transition(.opacity)
+                }
+            }
+            .animation(.easeInOut(duration: 0.4), value: showSplash)
+            .preferredColorScheme(.dark)
         }
-        .modelContainer(sharedModelContainer)
     }
 }

@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		A1000001000000000000001 /* ChatKit in Frameworks */ = {isa = PBXBuildFile; productRef = A1000002000000000000001 /* ChatKit */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		0B9362CF304ADED4009F39A2 /* ChatApp-SwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ChatApp-SwiftUI.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1000001000000000000001 /* ChatKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +70,7 @@
 			);
 			name = "ChatApp-SwiftUI";
 			packageProductDependencies = (
+				A1000002000000000000001 /* ChatKit */,
 			);
 			productName = "ChatApp-SwiftUI";
 			productReference = 0B9362CF304ADED4009F39A2 /* ChatApp-SwiftUI.app */;
@@ -94,6 +100,9 @@
 			);
 			mainGroup = 0B9362C6304ADED4009F39A2;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				0B9362EB304AE074009F39A2 /* XCLocalSwiftPackageReference "ChatKit" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0B9362D0304ADED4009F39A2 /* Products */;
 			projectDirPath = "";
@@ -328,6 +337,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		0B9362EB304AE074009F39A2 /* XCLocalSwiftPackageReference "ChatKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ChatKit;
+		};
+		A1000003000000000000001 /* XCLocalSwiftPackageReference "ChatKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ChatKit;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A1000002000000000000001 /* ChatKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A1000003000000000000001 /* XCLocalSwiftPackageReference "ChatKit" */;
+			productName = ChatKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0B9362C7304ADED4009F39A2 /* Project object */;
 }
