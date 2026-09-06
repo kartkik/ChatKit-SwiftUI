@@ -19,8 +19,6 @@ A iOS chat application demonstrating a **SwiftUI chat UI delivered as a local Sw
 | ♿ **Accessible** | `accessibilityLabel` and `accessibilityHint` on all interactive elements |
 | 📳 **Haptic feedback** | `sensoryFeedback(.impact)` fires on every send (iOS 17+) |
 | 🌙 **Dark mode first** | Carefully designed dark theme with glassmorphism-inspired surfaces |
-| 🚀 **Splash screen** | Animated spring logo + shimmer + progress bar |
-
 ---
 
 ## 📐 Architecture
