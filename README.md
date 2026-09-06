@@ -4,6 +4,15 @@ A iOS chat application demonstrating a **SwiftUI chat UI delivered as a local Sw
 
 ---
 
+## 🎬 App Demo
+
+<video src="assets/demo.mov" width="350" controls autoplay loop muted playsinline></video>
+
+*[Click here if video preview is not available](assets/demo.mov)*
+
+---
+
+
 ## ✨ Features
 
 | Feature | Detail |

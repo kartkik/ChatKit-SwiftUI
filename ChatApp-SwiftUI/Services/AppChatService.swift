@@ -13,97 +13,135 @@ final class AppChatService: ChatServiceProtocol {
     private let minTokenDelay: Double = 0.03
     private let maxTokenDelay: Double = 0.07
 
-    private static let responses: [(keywords: [String], reply: String)] = [
-        (
-            keywords: ["hello", "hi", "hey", "greetings", "howdy"],
-            reply: """
-            Hey there! 👋 Welcome to the ChatApp demo.
+   private static let responses: [(keywords: [String], reply: String)] = [
+    
+    (
+        keywords: ["hello", "hi", "hey", "greetings", "howdy"],
+        reply: """
+        Hey! 👋
 
-            I'm an AI assistant powered by the **ChatKit** Swift Package. \
-            The app you're running is the *host app* — it owns all my responses \
-            and injects them into ChatKit via `AppChatService`. \
-            ChatKit itself is just the UI shell.
+        Nice to meet you. How can I help you today?
+        """
+    ),
+    
+    (
+        keywords: ["how are you", "how are you doing", "how do you do", "you okay"],
+        reply: """
+        I'm doing great, thanks for asking! 😊
 
-            What would you like to talk about?
-            """
-        ),
-        (
-            keywords: ["chatkit", "package", "spm", "swift package", "architecture"],
-            reply: """
-            Great question! Here's how the architecture works:
+        How are you doing today?
+        """
+    ),
+    
+    (
+        keywords: ["help", "can you help me", "i need help", "assist me"],
+        reply: """
+        Of course! 😊 I'm here to help.
 
-            📦 **ChatKit (Swift Package)**
-            • Views, ViewModel, Models, Protocol — pure UI shell
-            • Defines `ChatServiceProtocol` but ships no hardcoded data
+        You can ask me questions, have a conversation, or ask for help with Swift, iOS, programming, and more.
 
-            📱 **Host App**
-            • Owns `AppChatService` — ALL responses live here
-            • Injects the service via `ChatScreen(service: AppChatService())`
-            • Owns `ChatScreenViewModel` with MVVM config
+        What would you like help with?
+        """
+    ),
+    
+    (
+        keywords: ["what can you do", "what do you do", "your capabilities"],
+        reply: """
+        I can help with lots of things! 😊
 
-            This means you can change every response without touching the package. ✅
-            """
-        ),
-        (
-            keywords: ["stream", "streaming", "async", "await", "asyncstream"],
-            reply: """
-            Streaming is powered by **Swift Concurrency**:
+        • Answer questions
+        • Help with Swift and iOS development
+        • Explain programming concepts
+        • Tell jokes
+        • Have a friendly conversation
 
-            1. `AppChatService.streamResponse(for:)` returns an `AsyncStream<String>`
-            2. Tokens are yielded every 30–70 ms (configurable in `AppChatService`)
-            3. `ChatViewModel` iterates with `for await token in stream { }`
-            4. Each token is appended to the live message — SwiftUI re-renders the bubble in real time
-            5. A blinking cursor `▌` shows while `streamState == .streaming`
-            """
-        ),
-        (
-            keywords: ["mvvm", "viewmodel", "view model", "pattern"],
-            reply: """
-            The project uses strict **MVVM** across both the package and the host app:
+        Just ask me anything! 🚀
+        """
+    ),
+    
+    (
+        keywords: ["who are you", "what are you"],
+        reply: """
+        I'm a friendly AI assistant built into this ChatApp demo. 🤖
 
-            **ChatKit package**
-            • Model → `Message`, `Conversation` (value types, Sendable)
-            • ViewModel → `ChatViewModel` (@MainActor, @Observable)
-            • View → `ChatScreen`, `MessageBubble`, `MessageInputBar`, `TypingIndicator`
-            • Service → `ChatServiceProtocol` (protocol, no concrete data)
+        I'm here to chat with you and help answer your questions!
+        """
+    ),
+    
+    (
+        keywords: ["thank you", "thanks", "thank", "thx"],
+        reply: """
+        You're very welcome! 😊
 
-            **Host App**
-            • `ChatScreenViewModel` — owns config + service injection
-            • `AppChatService` — all response data owned here
-            • `ChatApp_SwiftUIApp` — thin router (Splash → Chat)
+        I'm always happy to help. Let me know if you need anything else!
+        """
+    ),
+    
+    (
+        keywords: ["good morning"],
+        reply: """
+        Good morning! ☀️
 
-            Views own **zero** business logic. 💯
-            """
-        ),
-        (
-            keywords: ["swiftui", "swift", "ios", "apple", "xcode"],
-            reply: """
-            This app targets **iOS 17+** and uses the latest SwiftUI APIs:
+        I hope you have a wonderful day ahead. What can I help you with?
+        """
+    ),
+    
+    (
+        keywords: ["good afternoon"],
+        reply: """
+        Good afternoon! 😊
 
-            • `@Observable` macro instead of `ObservableObject` + `@Published`
-            • `@Bindable` for two-way VM bindings in the input bar
-            • `AsyncStream<String>` for streaming (no Combine needed)
-            • `LazyVStack` for efficient message list rendering
-            • `.scrollDismissesKeyboard(.interactively)` for smooth UX
-            • `contentTransition(.symbolEffect(.replace))` on the send/stop button
-            """
-        ),
-        (
-            keywords: ["joke", "funny", "laugh", "humor", "fun"],
-            reply: """
-            Why did the Swift developer go broke? 😄
+        Hope your day is going well! How can I help?
+        """
+    ),
+    
+    (
+        keywords: ["good evening"],
+        reply: """
+        Good evening! 🌙
 
-            Because he used too many **optional** spending habits — \
-            and kept force-unwrapping his wallet! 💸
+        How has your day been? Is there anything I can help you with?
+        """
+    ),
+    
+    (
+        keywords: ["joke", "funny", "laugh", "humor"],
+        reply: """
+        Here's one for you! 😄
 
-            `let money: Double? = wallet.balance // nil 😅`
-            """
-        ),
-        (
-            keywords: ["bye", "goodbye", "see you", "later", "ciao", "quit"],
-            reply: "Goodbye! Happy coding. Remember — all my responses are in `AppChatService.swift` in the host app, so feel free to customise them! 👋✨"
-        ),
-    ]
+        Why do programmers prefer dark mode?
+
+        Because light attracts bugs! 🐛😂
+        """
+    ),
+    
+    (
+        keywords: ["chatkit", "package", "spm", "swift package"],
+        reply: """
+        ChatKit is the Swift Package responsible for the chat interface.
+
+        The host app provides the data and responses, while ChatKit handles displaying the conversation. 📦
+        """
+    ),
+    
+    (
+        keywords: ["swift", "swiftui", "ios", "xcode"],
+        reply: """
+        Swift and SwiftUI are great technologies for building modern Apple applications! 🍎
+
+        Feel free to ask me anything about iOS development.
+        """
+    ),
+    
+    (
+        keywords: ["bye", "goodbye", "see you", "later", "ciao", "quit"],
+        reply: """
+        Goodbye! 👋😊
+
+        It was nice talking with you. Have a great day!
+        """
+    )
+]
 
     private static let fallbackReplies: [String] = [
         "Interesting! I'm a host-app-controlled assistant. Edit `AppChatService.swift` to add a response for that topic. 📝",
